@@ -18,7 +18,7 @@ Our current MoMAR implementation is for ARKit (iOS) AR devices. The required cod
 
 **Admin AR device:** the C# scripts _PlaceAnchorOnPlane.cs_ and _ARWorldMapController.cs_, which implement the 'Map creation' module in MoMAR. The C# script _DataVisualization.cs_, which implements the 'Data visualization' module in MoMAR.
 
-**Server:** a Python script _SiTAR-Server.py_, which implements the 'Sequence assignment' and 'Uncertainty-based error estimation' modules in SiTAR.
+**Server:** a Python script _MoMAR-Server.py_, which implements the 'Map provisioning' module and handles HTTP POST and GET requests between the AR devices and the server, and a Python script _motionAnalysis.py_, which implements the 'Motion analysis' module.
 
 **User AR device:** the C# scripts _RenderAnchorContent.cs_ and _ARWorldMapController.cs_, which implement the 'Map retrieval' module in MoMAR. _RenderAnchorContent.cs_ also provides a framework for how virtual content can be rendered based on the contents of the anchor dictionary. The C# script _MotionLog.cs_, which implements the 'Motion logging' module in MoMAR.
 
