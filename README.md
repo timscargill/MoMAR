@@ -15,3 +15,66 @@ The system architecture for MoMAR is shown below. To create a persistent AR expe
 # Implementation Resources
 
 Our implementation code and associated resources for MoMAR are provided in three parts, for the **admin AR device**, the **server** and the **user AR device** respectively. The code for each can be found in the repository folders named '_admin-AR-device_', '_server_', and '_user-AR-device_'. The implementation resources consist of the following:
+
+**User AR device:** A C# script _DrawTrajectory.cs_, which implements the 'Trajectory creation' and 'Trajectory visualization' modules in SiTAR. Unity prefabs for base trajectory visualization, _Start.prefab_, _Stop.prefab_, _Cylinder.prefab_, _Joint.prefab_ and _Frustum.prefab_. Unity prefabs and materials for pose error visualizations, _ErrorAreaHigh.prefab_, _ErrorAreaMedium.prefab_, _ErrorPatchHigh.prefab_, _ErrorPatchMedium.prefab_, _ErrorHigh.mat_ and _ErrorMedium.mat_.   
+
+**Server:** a Python script _SiTAR-Server.py_, which implements the 'Sequence assignment' and 'Uncertainty-based error estimation' modules in SiTAR.
+
+**Playback AR device:** a C# script _TrajectoryPlayback.cs_, which implements the 'Sequence playback' module in SiTAR.
+
+
+# Implementation Instructions
+
+**Prerequisites:** 2 or more Android devices running ARCore v1.3 or above; server with Python 3.8 or above and the evo (https://github.com/MichaelGrupp/evo) and FastAPI (https://fastapi.tiangolo.com/lo/) Python packages installed, and Android SDK Platform Tools installed (https://developer.android.com/tools/releases/platform-tools). For building the necessary apps to AR devices, Unity 2021.3 or later is required, with the AR Foundation framework v4.2 or later and the ARCore Extensions v1.36 or later packages installed.
+
+Tested with Google Pixel 7 and Google Pixel 7 Pro devices running ARCore v1.31, and Apple Macbook Pro as edge server (Python 3.8).
+
+**Admin AR device:** 
+1) Create a Unity project with the AR Foundation template. Make sure the ARCore Extensions is fully set up by following the instructions here: https://developers.google.com/ar/develop/unity-arf/getting-started-extensions.
+2) Add the _DrawTrajectory.cs_ script (in the _user-AR-device_ folder) to the AR Session Origin GameObject.
+3) Drag the AR Camera GameObject to the 'Camera Manager' and 'Camera' slots in the Draw Trajectory inspector panel.
+4) Add the _Start.prefab_, _Stop.prefab_, _Cylinder.prefab_, _Joint.prefab_ and _Frustum.prefab_ files (in the _user-AR-device_ folder) to your Assets folder, and drag them to the 'Start Prefab', 'Stop Prefab', 'Cylinder Prefab', 'Joint Prefab' and 'Frustum Prefab' slots in the Draw Trajectory inspector panel.
+5) (Optional) If using the exclamation points or warning signs visualizations, add the _ErrorAreaHigh.prefab_, _ErrorAreaMedium.prefab_, _ErrorPatchHigh.prefab_, and _ErrorPatchMedium.prefab_ files (in the _user-AR-device_ folder) to your Assets folder, and drag them to the 'Error Area High Prefab', 'Error Area Medium Prefab', 'Error Patch High Prefab', and 'Error Patch Medium Prefab' slots in the Draw Trajectory inspector panel.
+7) Add the _ErrorHigh.mat_ and _ErrorMedium.mat_ files (in the _user-AR-device_ folder) to your Assets folder, and drag them to the 'Error High' and 'Error Medium' slots in the Draw Trajectory inspector panel.
+8) Add Start and Stop UI buttons, drag them to the 'Start Button' and 'Stop Button' slots in the Draw Trajectory inspector panel, and set their OnClick actions to 'DrawTrajectory.HandleStartClick' and 'DrawTrajectory.HandleStopClick' respectively.
+9) Either hardcode your server IP address into line 481 of _DrawTrajectory.cs_, or add a UI panel with a text field to capture this data from the user.
+10) (Optional) Add UI text objects to display SiTAR status, trajectory duration, length, average environment depth, and drag them to the 'Status', 'Trajectory Duration', 'Trajectory Length' and 'Trajectory Depth' slots in the Draw Trajectory inspector panel.
+11) (Optional) Add audio clips for notifying when error estimates are ready, user captures image, and user has captured all regions, and drag them to the 'Audio Results', 'Audio Capture' and 'Audio Complete' slots in the Draw Trajectory inspector panel.
+12) Set the Build platform to Android, select your device under Run device, and click Build and Run.
+
+**Server:**
+1) Create a folder on the server where SiTAR files will be located. Add an additional sub-folder named 'trajectories'.
+2) Download the _server_ folder in the repository to your SiTAR folder.
+3) Open the _SiTAR-Server.py_ file in the _server_ folder, complete the required configuration parameters on lines 20-29, and save.
+4) In Terminal or Command Prompt, navigate to your SiTAR folder.
+5) Start the server using the following command: ```uvicorn server.SiTAR-Server:app --host 0.0.0.0```
+
+**User AR device:**
+1) Create a Unity project with the AR Foundation template. Make sure the ARCore Extensions is fully set up by following the instructions here: https://developers.google.com/ar/develop/unity-arf/getting-started-extensions.
+2) (Optional) Add the AR Plane Manager and AR Point Cloud Manager scripts (included in AR Foundation) to the AR Session Origin GameObject if you wish to visualize planes and feature points during playback.
+3) Add the _TrajectoryPlayback.cs_ script (in the _playback-AR-device_ folder) to the AR Session GameObject.
+4) Create a UI text object to display log messages, and drag it to the 'Log' slot in the Trajectory Playback inspector panel.
+5) Drag the AR Camera GameObject to the 'Camera Manager' and 'Camera' slots in the Trajectory Playback inspector panel.
+6) Set the Build platform to Android, select your device under Run device, and click Build and Run.
+
+# Citation
+
+If you use MoMAR in an academic work, please cite: 
+
+```
+@inproceedings{MoMAR,
+  title={Environment texture optimization for augmented reality},
+  author={Scargill, Tim and Janamsetty, Ritvik and Fronk, Christian and Eom, Sangjun and Gorlatova, Maria},
+  booktitle={Proceedings of ACM IMWUT 2024},
+  year={2024}
+ }
+ ```
+
+# Acknowledgements 
+
+The authors of this repository are Tim Scargill and Maria Gorlatova. Contact information of the authors:
+
+* Tim Scargill (timothyjames.scargill AT duke.edu)
+* Maria Gorlatova (maria.gorlatova AT duke.edu)
+
+This work was supported in part by NSF grants CNS-1908051, CNS-2112562, CSR-2312760 and IIS-2231975, NSF CAREER Award IIS-2046072, a Meta Research Award and a CISCO Research Award. 
