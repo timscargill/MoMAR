@@ -25,37 +25,36 @@ Our current MoMAR implementation is for ARKit (iOS) AR devices. The required cod
 
 # Implementation Instructions
 
-**Prerequisites:** 1 or more iOS or iPad OS devices running iOS/iPad OS 15 or above, and a server with Python 3.8 or above and and FastAPI (https://fastapi.tiangolo.com/lo/) Python packages installed. For building the necessary apps to AR devices, Unity 2021.3 or later is required, with the AR Foundation framework v4.2 or later installed.
+**Prerequisites:** 1 or more iOS or iPad OS devices running iOS/iPad OS 15 or above, and an edge server with Python 3.8 or above and and FastAPI (https://fastapi.tiangolo.com/lo/) Python packages installed. For building the necessary apps to AR devices, Unity 2021.3 or later is required, with the AR Foundation framework v4.2 or later installed.
 
 Tested with an iPhone 13 (iOS 16), an iPhone 13 Pro Max (iOS 15), an iPhone 14 Pro Max (iOS 17), an iPad Pro 2nd gen. (iPad OS 17, and an iPad Pro 4th gen. (iPad OS 16) as AR devices, and a desktop PC with an Intel i7-9700K CPU and an Nvidia GeForce RTX 2060 GPU as an edge server (Python 3.8).
 
 **Admin AR device:** 
-1) Create a Unity project with the AR Foundation template. Make sure the ARCore Extensions is fully set up by following the instructions here: https://developers.google.com/ar/develop/unity-arf/getting-started-extensions.
-2) Add the _DrawTrajectory.cs_ script (in the _user-AR-device_ folder) to the AR Session Origin GameObject.
-3) Drag the AR Camera GameObject to the 'Camera Manager' and 'Camera' slots in the Draw Trajectory inspector panel.
-4) Add the _Start.prefab_, _Stop.prefab_, _Cylinder.prefab_, _Joint.prefab_ and _Frustum.prefab_ files (in the _user-AR-device_ folder) to your Assets folder, and drag them to the 'Start Prefab', 'Stop Prefab', 'Cylinder Prefab', 'Joint Prefab' and 'Frustum Prefab' slots in the Draw Trajectory inspector panel.
-5) (Optional) If using the exclamation points or warning signs visualizations, add the _ErrorAreaHigh.prefab_, _ErrorAreaMedium.prefab_, _ErrorPatchHigh.prefab_, and _ErrorPatchMedium.prefab_ files (in the _user-AR-device_ folder) to your Assets folder, and drag them to the 'Error Area High Prefab', 'Error Area Medium Prefab', 'Error Patch High Prefab', and 'Error Patch Medium Prefab' slots in the Draw Trajectory inspector panel.
-7) Add the _ErrorHigh.mat_ and _ErrorMedium.mat_ files (in the _user-AR-device_ folder) to your Assets folder, and drag them to the 'Error High' and 'Error Medium' slots in the Draw Trajectory inspector panel.
-8) Add Start and Stop UI buttons, drag them to the 'Start Button' and 'Stop Button' slots in the Draw Trajectory inspector panel, and set their OnClick actions to 'DrawTrajectory.HandleStartClick' and 'DrawTrajectory.HandleStopClick' respectively.
-9) Either hardcode your server IP address into line 481 of _DrawTrajectory.cs_, or add a UI panel with a text field to capture this data from the user.
-10) (Optional) Add UI text objects to display SiTAR status, trajectory duration, length, average environment depth, and drag them to the 'Status', 'Trajectory Duration', 'Trajectory Length' and 'Trajectory Depth' slots in the Draw Trajectory inspector panel.
-11) (Optional) Add audio clips for notifying when error estimates are ready, user captures image, and user has captured all regions, and drag them to the 'Audio Results', 'Audio Capture' and 'Audio Complete' slots in the Draw Trajectory inspector panel.
-12) Set the Build platform to Android, select your device under Run device, and click Build and Run.
+1) Create a Unity project with the AR Foundation template.
+2) Add the AR Anchor Manager script (provided with the AR Foundation template) to the AR Session Origin GameObject.
+3) Add the _PlaceAnchorOnPlane.cs_ script (in the _admin-AR-device_ folder) to the AR Session Origin GameObject. Insert the IP address of your edge server on line 365.
+4) Add UI canvas buttons to handle placing different anchors, and link each button to the appropriate method in _PlaceAnchorOnPlane.cs_ (e.g., _PlaceAnchorA()_).
+5) Add the _MotionMapVisualization.cs_ script (in the _admin-AR-device_ folder) to the AR Session Origin GameObject. Insert the IP address of your edge server on line 65 and line 96.
+6) Create a new GameObject 'ARWorldMapController'. Drag the AR Session Game Object to the appropriate slot in the inspector. Add the _ARWorldMapController.cs_ script (in the _admin-AR-device_ folder, adapted from the example in the AR Foundation template) to the ARWorldMapController GameObject. Insert the IP address of your edge server on line 179 and line 289.
+7) Set the Build platform to iOS, and click Build.
+8) Load your built project in XCode, sign it using your Apple Developer ID, and run it on your admin AR device.
 
 **Server:**
-1) Create a folder on the server where SiTAR files will be located. Add an additional sub-folder named 'trajectories'.
+1) Create a folder on the server where MoMAR files will be located. Add an additional sub-folder named 'trajectories'.
 2) Download the _server_ folder in the repository to your SiTAR folder.
 3) Open the _SiTAR-Server.py_ file in the _server_ folder, complete the required configuration parameters on lines 20-29, and save.
 4) In Terminal or Command Prompt, navigate to your SiTAR folder.
 5) Start the server using the following command: ```uvicorn server.SiTAR-Server:app --host 0.0.0.0```
 
 **User AR device:**
-1) Create a Unity project with the AR Foundation template. Make sure the ARCore Extensions is fully set up by following the instructions here: https://developers.google.com/ar/develop/unity-arf/getting-started-extensions.
-2) (Optional) Add the AR Plane Manager and AR Point Cloud Manager scripts (included in AR Foundation) to the AR Session Origin GameObject if you wish to visualize planes and feature points during playback.
-3) Add the _TrajectoryPlayback.cs_ script (in the _playback-AR-device_ folder) to the AR Session GameObject.
-4) Create a UI text object to display log messages, and drag it to the 'Log' slot in the Trajectory Playback inspector panel.
-5) Drag the AR Camera GameObject to the 'Camera Manager' and 'Camera' slots in the Trajectory Playback inspector panel.
-6) Set the Build platform to Android, select your device under Run device, and click Build and Run.
+1) Create a Unity project with the AR Foundation template.
+2) Add the AR Anchor Manager script (provided with the AR Foundation template) to the AR Session Origin GameObject.
+3) Add the _RenderAnchorContent.cs_ script (in the _user-AR-device_ folder) to the AR Session Origin GameObject. Add code to declare and instantiate the specific GameObjects and Colliders you wish to render as indicated in the script. Insert the IP address of your edge server on line 66.
+4) Drag the Prefabs you wish to render to the appropriate places in the inspector for the _RenderAnchorContent.cs_ script.
+6) Add the _MotionLog.cs_ script (in the _user-AR-device_ folder) to the AR Session Origin GameObject. Insert the IP address of your edge server on line 131.
+7) Create a new GameObject 'ARWorldMapController'. Drag the AR Session Game Object to the appropriate slot in the inspector. Add the _ARWorldMapController.cs_ script (in the _admin-AR-device_ folder, adapted from the example in the AR Foundation template) to the ARWorldMapController GameObject. Insert the IP address of your edge server on line 179 and line 289.
+8) Set the Build platform to iOS, and click Build.
+9) Load your built project in XCode, sign it using your Apple Developer ID, and run it on your admin AR device.
 
 # Citation
 
