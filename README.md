@@ -25,9 +25,9 @@ Our current MoMAR implementation is for ARKit (iOS) AR devices. The required cod
 
 # Implementation Instructions
 
-**Prerequisites:** 2 or more Android devices running ARCore v1.3 or above; server with Python 3.8 or above and the evo (https://github.com/MichaelGrupp/evo) and FastAPI (https://fastapi.tiangolo.com/lo/) Python packages installed, and Android SDK Platform Tools installed (https://developer.android.com/tools/releases/platform-tools). For building the necessary apps to AR devices, Unity 2021.3 or later is required, with the AR Foundation framework v4.2 or later and the ARCore Extensions v1.36 or later packages installed.
+**Prerequisites:** 1 or more iOS or iPad OS devices running iOS/iPad OS 15 or above, and a server with Python 3.8 or above and and FastAPI (https://fastapi.tiangolo.com/lo/) Python packages installed. For building the necessary apps to AR devices, Unity 2021.3 or later is required, with the AR Foundation framework v4.2 or later installed.
 
-Tested with Google Pixel 7 and Google Pixel 7 Pro devices running ARCore v1.31, and Apple Macbook Pro as edge server (Python 3.8).
+Tested with an iPhone 13 (iOS 16), an iPhone 13 Pro Max (iOS 15), an iPhone 14 Pro Max (iOS 17), an iPad Pro 2nd gen. (iPad OS 17, and an iPad Pro 4th gen. (iPad OS 16) as AR devices, and a desktop PC with an Intel i7-9700K CPU and an Nvidia GeForce RTX 2060 GPU as an edge server (Python 3.8).
 
 **Admin AR device:** 
 1) Create a Unity project with the AR Foundation template. Make sure the ARCore Extensions is fully set up by following the instructions here: https://developers.google.com/ar/develop/unity-arf/getting-started-extensions.
