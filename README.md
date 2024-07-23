@@ -16,12 +16,11 @@ The system architecture for MoMAR is shown below. To create a persistent AR expe
 
 Our current MoMAR implementation is for ARKit (iOS) AR devices. The required code is provided in three parts, for the **admin AR device**, the **server** and the **user AR device** respectively. The code for each can be found in the repository folders named '_admin-AR-device_', '_server_', and '_user-AR-device_'. The implementation resources consist of the following:
 
-**User AR device:** A C# script _DrawTrajectory.cs_, which implements the 'Trajectory creation' and 'Trajectory visualization' modules in SiTAR. Unity prefabs for base trajectory visualization, _Start.prefab_, _Stop.prefab_, _Cylinder.prefab_, _Joint.prefab_ and _Frustum.prefab_. Unity prefabs and materials for pose error visualizations, _ErrorAreaHigh.prefab_, _ErrorAreaMedium.prefab_, _ErrorPatchHigh.prefab_, _ErrorPatchMedium.prefab_, _ErrorHigh.mat_ and _ErrorMedium.mat_.   
+**Admin AR device:** the C# scripts _PlaceAnchorOnPlane.cs_ and _ARWorldMapController.cs_, which implement the 'Map creation' module in MoMAR. The C# script _DataVisualization.cs_, which implements the 'Data visualization' module in MoMAR.
 
 **Server:** a Python script _SiTAR-Server.py_, which implements the 'Sequence assignment' and 'Uncertainty-based error estimation' modules in SiTAR.
 
-**Playback AR device:** a C# script _TrajectoryPlayback.cs_, which implements the 'Sequence playback' module in SiTAR.
-
+**User AR device:** the C# scripts _RenderAnchorContent.cs_, which implements the 'Map retrieval' module in MoMAR, and provides a framework for how virtual content can be rendered based on the contents of the anchor dictionary. The C# script _MotionLog.cs_, which implements the 'Motion logging' module in MoMAR.
 
 # Implementation Instructions
 
@@ -34,7 +33,7 @@ Tested with an iPhone 13 (iOS 16), an iPhone 13 Pro Max (iOS 15), an iPhone 14 P
 2) Add the AR Anchor Manager script (provided with the AR Foundation template) to the AR Session Origin GameObject.
 3) Add the _PlaceAnchorOnPlane.cs_ script (in the _admin-AR-device_ folder) to the AR Session Origin GameObject. Insert the IP address of your edge server on line 365.
 4) Add UI canvas buttons to handle placing different anchors, and link each button to the appropriate method in _PlaceAnchorOnPlane.cs_ (e.g., _PlaceAnchorA()_).
-5) Add the _MotionMapVisualization.cs_ script (in the _admin-AR-device_ folder) to the AR Session Origin GameObject. Insert the IP address of your edge server on line 65 and line 96.
+5) Add the _DataVisualization.cs_ script (in the _admin-AR-device_ folder) to the AR Session Origin GameObject. Insert the IP address of your edge server on line 65 and line 96.
 6) Create a new GameObject 'ARWorldMapController'. Drag the AR Session Game Object to the appropriate slot in the inspector. Add the _ARWorldMapController.cs_ script (in the _admin-AR-device_ folder, adapted from the example in the AR Foundation template) to the ARWorldMapController GameObject. Insert the IP address of your edge server on line 179 and line 289.
 7) Set the Build platform to iOS, and click Build.
 8) Load your built project in XCode, sign it using your Apple Developer ID, and run it on your admin AR device.
