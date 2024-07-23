@@ -14,7 +14,7 @@ The system architecture for MoMAR is shown below. To create a persistent AR expe
 
 # Implementation Resources
 
-Our implementation code and associated resources for MoMAR are provided in three parts, for the **admin AR device**, the **server** and the **user AR device** respectively. The code for each can be found in the repository folders named '_admin-AR-device_', '_server_', and '_user-AR-device_'. The implementation resources consist of the following:
+Our current MoMAR implementation is for ARKit (iOS) AR devices. The required code is provided in three parts, for the **admin AR device**, the **server** and the **user AR device** respectively. The code for each can be found in the repository folders named '_admin-AR-device_', '_server_', and '_user-AR-device_'. The implementation resources consist of the following:
 
 **User AR device:** A C# script _DrawTrajectory.cs_, which implements the 'Trajectory creation' and 'Trajectory visualization' modules in SiTAR. Unity prefabs for base trajectory visualization, _Start.prefab_, _Stop.prefab_, _Cylinder.prefab_, _Joint.prefab_ and _Frustum.prefab_. Unity prefabs and materials for pose error visualizations, _ErrorAreaHigh.prefab_, _ErrorAreaMedium.prefab_, _ErrorPatchHigh.prefab_, _ErrorPatchMedium.prefab_, _ErrorHigh.mat_ and _ErrorMedium.mat_.   
 
