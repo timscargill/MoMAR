@@ -10,7 +10,7 @@ Our MoMAR system provides situated visualizations of AR user motion patterns, to
 
 The system architecture for MoMAR is shown below. To create a persistent AR experience, an administrator uses the map creation module on an admin AR device to generate a world map and place one or more spatial anchors within that space. These data are then transferred to and stored on the server. When a user starts a new session, the map retrieval module on the user AR device requests the map and anchor data from the map provisioning module on the server. These data are then used to localize the new session within the saved world map. Upon successful localization, the motion logging module on the user AR device is activated, which periodically sends device motion data to the server while the session is active. The motion analysis module on the server can be run on demand or periodically to analyze all user motion data, or those from a specified time range, to produce the motion map data. Finally, the data visualization module on the admin AR device is used to request motion map data from the server and display a motion map using situated visualizations.
 
-![MoMAR system architecture](https://github.com/timscargill/MoMAR/blob/main/MoMAR_SystemArchitecture.pdf?raw=true)
+![MoMAR system architecture](https://github.com/timscargill/MoMAR/blob/main/MoMAR_SystemArchitecture.png?raw=true)
 
 # Implementation Resources
 
