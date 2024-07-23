@@ -39,11 +39,11 @@ Tested with an iPhone 13 (iOS 16), an iPhone 13 Pro Max (iOS 15), an iPhone 14 P
 8) Load your built project in XCode, sign it using your Apple Developer ID, and run it on your admin AR device.
 
 **Server:**
-1) Create a folder on the server where MoMAR files will be located. Add an additional sub-folder named 'trajectories'.
-2) Download the _server_ folder in the repository to your SiTAR folder.
-3) Open the _SiTAR-Server.py_ file in the _server_ folder, complete the required configuration parameters on lines 20-29, and save.
-4) In Terminal or Command Prompt, navigate to your SiTAR folder.
-5) Start the server using the following command: ```uvicorn server.SiTAR-Server:app --host 0.0.0.0```
+1) Create a folder on the server where MoMAR files will be located.
+2) Download the _server_ folder in the repository to your new MoMAR folder.
+3) In Terminal or Command Prompt, navigate to your MoMAR folder.
+4) Start the server using the following command: ```uvicorn server.MoMAR-Server:app --host 0.0.0.0```. The server will now facilitate the setup and loading of your persistent AR experience, and capture motion log data. The motion log data will be appended to a new file in your MoMAR folder, 'motionlog.txt'.
+5) When you wish to run motion analysis (required before data visualization), run the _motionAnalysis.py_ script, which will create the 'motionData.csv' file. This file is downloaded by the data visualization module on the admin AR device. 
 
 **User AR device:**
 1) Create a Unity project with the AR Foundation template.
